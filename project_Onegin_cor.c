@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <math.h>
 
 #define SIZE_ROWS 100
 #define NUM_ROWS 100
@@ -29,7 +30,7 @@ int CompareFuncDown (const void* StringLeft, const void* StringRight);
 
 int my_strcmp_alpha_down (const char* s1, const char* s2);
 
-void change_index (char** index1, char** index2);/// 
+void change_index (char** index1, char** index2);
 
 int main(void)
 {
@@ -52,6 +53,12 @@ int main(void)
     buble_sort(index, max_rows);
 
     PrintStrings(max_rows, (const char**)index, "Check Sort RAP");
+
+    FreeStrings(index, max_rows);
+
+    max_rows = ReadFromFile("Onegin.txt", SIZE_ROWS, index);
+
+    PrintStrings(max_rows, (const char**)index, "Check Sort Orginal");
 
     FreeStrings(index, max_rows);
 
@@ -195,7 +202,7 @@ int my_strcmp_alpha_up(const char* s1, const char* s2) //
         s2++;
     }
 
-    return 0; //может сделать возвращать NAN
+    return (int)NAN; //может возвращать NAN
 }
 
 
@@ -205,7 +212,7 @@ void buble_sort (char* index[], int max_rows)
 
     size_t amount_run = 0;
 
-    for (size_t run = 0; run < max_rows - 1; run ++)
+    for (size_t run = 0; run < max_rows - (size_t)1; run ++)
     {
         for (size_t i = 0; i < (size_t)max_rows - 1 - amount_run; i++)
         {
@@ -252,12 +259,12 @@ int   my_strcmp_alpha_down (const char* s1, const char* s2)
 
     while (1000-7 >0)
     {
-        while (i1 >= 0 && !isalpha((unsigned char)s1[i1]))
+        while (i1 >= 0 && !isalpha(s1[i1]))
         {
             i1--;
         }
 
-        while (i2 >= 0 && !isalpha((unsigned char)s2[i2]))
+        while (i2 >= 0 && !isalpha(s2[i2]))
         {
             i2--;
         }
@@ -278,5 +285,7 @@ int   my_strcmp_alpha_down (const char* s1, const char* s2)
         i1--;
         i2--;
     }
-
+ /* какое значение возвращать, чтобы убрать варнинг вариант :
+ abort;
+ return 0;*/
 }
